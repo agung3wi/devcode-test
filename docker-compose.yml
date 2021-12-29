@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  mysql:
+    image: mysql:5.7
+    container_name: mysql-todo
+    environment:
+      MYSQL_ROOT_PASSWORD: test
+      MYSQL_DATABASE: test
+      MYSQL_USER: test
+      MYSQL_PASSWORD: test
+    restart: always
+    networks:
+      - devcode
+  app:
+    image: todo-app # ganti dengan image kamu
+    container_name: app-todo
+    depends_on:
+      - mysql
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_USER: test
+      MYSQL_PASSWORD: test
+      MYSQL_DBNAME: test
+    restart: always
+    networks:
+      - devcode
+    ports:
+      - 8090:3030
+networks:
+  devcode:
+    name: devcode
+    driver: bridge
